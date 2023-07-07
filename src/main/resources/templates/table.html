@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detail</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;400;500;600;700;800;900&family=Poor+Story&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/table.css}">
+</head>
+<body>
+    <header>
+        <div class="header-arrange">
+            <p>GIC CAFE SHOP</p>
+            <ul>
+                <li><a href="/giccafe/homepage" style="color: #fff;">HOME</a></li>
+                <li><a href="/giccafe/table" style="color: #fff;">TABLE</a></li>
+                <li><a href="/logout" style="color: #fff;">LOGOUT</a></li>
+            </ul>
+            <i>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                </svg>                  
+            </i>
+        </div>
+    </header>
+    <main>
+        <div class="path">
+            <p>COFFEE TABLE</p>
+        </div>
+        <div class="main-detail">
+            <div class = "left-side">
+                <div th:attr="onclick=|update('${table.id}')|" class="box" th:each="table: ${tables}" th:classappend="(${table.status} == 0) ? active : ((${table.status} == 1) ? (waiting) : (busy)) "><span th:text="${table.table_no}"></span></div>
+            </div>
+            <div class="right-side">
+                <h4>TABLE INFORMATION</h4>
+                <div class="info">
+                    <p>Active: 16 tables</p>
+                    <p>Waiting: 16 tables</p>
+                    <p>Busy: 16 tables</p>
+                </div>
+            </div>
+        </div>
+        <div class="select_type" id="select_type">
+            <p>Type</p>
+            <div class="contain_type">
+                <div class="type" id="active">
+                    <div></div>
+                    <span>Active</span>
+                </div>
+                <div class="type" id="waiting">
+                    <div></div>
+                    <span>Waiting</span>
+                </div>
+                <div class="type" id="busy">
+                    <div></div>
+                    <span>Busy</span>
+                </div>
+            </div>
+        </div>
+        <form id="update_table" method="post"></form>
+    </main>
+    <script>
+        let types = document.getElementById("select_type")
+        let active = document.getElementById("active")
+        let waiting = document.getElementById("waiting")
+        let busy = document.getElementById("busy")
+        let update_table = document.getElementById("update_table")
+        function update(id){
+            types.style.display = "block"
+            active.onclick = () => {
+                types.style.display = "none"
+
+                update_table.action = "/set_table_by_id/" + id + "/" + 0;
+                update_table.submit()
+
+            }
+            waiting.onclick = () => {
+                types.style.display = "none"
+
+                update_table.action = "/set_table_by_id/" + id + "/" + 1;
+                update_table.submit()
+
+            }
+            busy.onclick = () => {
+                types.style.display = "none"
+
+                update_table.action = "/set_table_by_id/" + id + "/" + 2;
+                update_table.submit()
+            }
+        }
+    </script>
+</body>
+</html>

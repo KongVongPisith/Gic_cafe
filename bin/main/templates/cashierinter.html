@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;400;500;600;700;800;900&family=Poor+Story&display=swap" rel="stylesheet">
+    <title>Admin</title>
+    <style>
+        :root{
+            --font-header: 36px;
+            --font-regular: 16px;
+            --font-semi-regular: 20px;
+            --font-semi-header: 26px;
+        }
+        *{
+            box-sizing: border-box;
+            padding: 0;
+            margin: 0;
+            list-style: none;
+            text-decoration: none;
+            font-family: 'Nunito', sans-serif;
+            font-family: 'Poor Story', cursive;
+        }
+        
+        
+       
+
+        main {
+            /* margin-top: 1r; */
+            width:100vw;
+            height:100%;
+            display:flex;
+            justify-content:center;
+            margin-top: 30px;
+            min-height: 70vh;
+            
+
+        }
+
+        main .wrapper {
+            display: flex;
+            border: 1px solid black;
+
+
+        }
+
+        .line {
+            width: 1px;
+            height: 100%;
+            background-color: black;
+        }
+
+        main .wrapper .right_box .showInfo {
+            width: 600px;
+            height: 500px;
+            /* margin: auto; */
+        }
+
+        header{
+            height: 80px;
+            width: 100%;
+            background: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-bottom: 1px solid silver;
+        }
+        
+        header .header-arrange{
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 40px;
+        }
+        
+        header .header-arrange p{
+            color: #fff;
+            font-size: var(--font-header);
+        }
+        
+        header .header-arrange ul{
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            color: #fff;
+            padding: 0 40px 0 0;
+        }
+        
+        header .header-arrange ul li{
+            cursor: pointer;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        header .header-arrange i{
+            color: #fff;
+            width: 20px;
+            height: 20px;
+            display: none;
+        }
+        
+        @media (max-width: 840px){
+            header .header-arrange i{
+                display: block;
+            }
+            header .header-arrange ul{
+                position: absolute;
+                top: 80px;
+                flex-direction: column;
+                width: 100%;
+                background: #000;
+                left: 0;
+                padding: 40px 20px;
+            }
+            header .header-arrange ul li{
+                padding: 10px 0;
+                border-radius: 10px;
+            }
+            header .header-arrange ul li:hover{
+                background: rgb(255, 255, 255);
+                color: #000;
+            }
+        }
+
+        .tab {
+            position: relative;
+            display: flex;
+            width: 100%;
+            height: 60px;
+           
+            overflow: hidden;
+            border: 1px solid #ccc;
+        }
+
+        .tablinks {
+            margin: auto;
+            width: 90px;
+            height: 40px;
+            background-color: rgb(0, 0, 0);
+            border-radius: 5px;
+            display: flex;
+            text-align: center;
+            font-weight: 400;
+            padding: auto;
+            cursor: pointer;
+            border: none;
+            outline: none;
+            transform: scale();
+            font-size: 20px;
+        }
+
+        .tablinks a {
+            margin: auto;
+            text-decoration: none;
+            color: white;
+        }
+
+        .tablinks a:hover {
+            color: gray;
+        }
+
+        .tablinks:hover {
+            background-color:gray;
+            transition: 0.5s;
+        }
+
+        .tabcontent {
+            display: none;
+            width: 100%;
+        }
+
+        .tab button.active {
+            background-color: #ccc;
+            color: #000;
+        }
+
+        /* Information*/
+        .showInfo h1 {
+            text-align: center;
+        }
+
+        /* table */
+        table{
+            margin: auto;
+            width: 100%;
+        }
+        .scroll{
+            height: 367px;
+            width: 100%;
+            overflow-y: auto;
+            
+        }
+        table tr th {
+            align-items: center;
+            font-size: 20px;
+            background-color: rgb(0, 0, 0);
+            color: white;
+            height: 40px;
+            
+        }
+
+        table tr td {
+            font-size: 20px;
+        }
+
+        table tr:hover {
+            background-color: bisque;
+        }
+
+        /* Information */
+
+        .show1{
+            margin: auto;
+            display: flex;
+        }
+
+        .detailInfo{
+            margin-left: 20px;
+            font-size: large;
+        }
+
+        .name{
+            display: flex;
+        }
+        .sex{
+            display: flex;
+        }
+
+        .login{
+            display: flex;
+        }
+        .age{
+            display: flex;
+        }
+        .pwd{
+            display: flex;
+        
+        }
+
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        <div class="header-arrange">
+            <p>GIC CAFE SHOP</p>
+            <ul>
+                 <li><a href="/gicadmin/homepage" style="color: #fff;">HOME</a></li>
+                  <li><a href="/gicadmin/view_cashier" style="color: #fff;">CASHIER</a></li>
+                  <li><a href="/gicadmin/drink" style="color: #fff;">DRINK</a></li>
+                  <li><a href="/gicadmin/history" style="color: #fff;">HISTORY</a></li>
+                  <li><a href="/logout" style="color: #fff;">LOGOUT</a></li>
+            <i>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                </svg>                  
+            </i>
+        </div>
+        
+        
+            <!-- <a href="/gicadmin/create_cashier" style="margin-inline-start: 8px;">New Cashiers</a>| -->
+        
+      
+    </header>
+    <main>
+        <section class="wrapper">
+            <section class="left_box" style="width: 600px;">
+                <section class="menuBar">
+                    <nav class="tab">
+                        <button class="tablinks" onclick="listContent(event, 'Cashier')"><a>Cashier</a></button>
+
+                        <button class="tablinks" onclick="listContent(event, 'Drink')"><a></a></button>
+
+                        <button class="tablinks" onclick="listContent(event, 'Food')"><a></a></button>
+                    </nav>
+                </section>
+
+                <section class="listMenu">
+                    <article id="Cashier" class="tabcontent">
+                        <section class="scroll" >
+                            <table id="table1">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Cashier Name</th>
+                                        <th>Login</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody >
+                                    <tr id="show1" th:each="cashier : ${cashiers}" th:onclick="'showMoreInfo(' + ${cashier.id} +')'" class="clickable-row">
+                                        <td th:text="${cashier.id}"></td>
+                                        <td>[[${cashier.firstname}]] [[${cashier.lastname}]]</td>
+                                        <td th:text="${cashier.username}"></td>
+                                        <!-- <td><img src="data:image/jpeg;base64," th:attrappend="src=${cashier.image_path}" alt="" width="20px" height="20px"/></td> -->
+
+                                        </td>
+
+                                        <td style="display: flex; align-items: center; justify-content: center">
+                                            <a style="width: 20px; height: 20px; color: black" th:href="@{/gicadmin/updateCashier/{id}(id=${cashier.id})}">
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125" />
+                                                  </svg>                                                  
+                                            </a>
+                                            <a style="width: 20px; height: 20px; color: black" th:href="@{/gicadmin/delete_cashier/{id}(id=${cashier.id})}">
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                                                  </svg>                                                  
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </section>
+                    </article>
+
+                    <article id="Drink" class="tabcontent">
+                        <section class="scroll">
+                            <table id="table2">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Drink Code</th>
+                                        <th>Drink Name</th>
+                                        <th>Price($)</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr id="show2" class="clickable-row">
+                                        
+                                        
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </section>
+                    </article>
+
+                    <article id="Food" class="tabcontent">
+                        <section class="scroll">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Drink Code</th>
+                                        <th>Drink Name</th>
+                                        <th>Price($)</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr onclick="showMoreInfo(this)">
+                                        
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </section>
+                    </article>
+                </section>
+
+            </section>
+            <article class="line"></article>
+            <section class="right_box" id="rightBox">
+                <section class="showInfo" id ="showInformation" >
+                    <article>
+                        <section th:each="cashier : ${cashiers}" th:id="'tab-' + ${cashier.id}" class="show1" style="display: none;">
+                            <div style=" margin-bottom:10px">
+                                <h1 style="font-size: 40px;">Information</h1>
+                            </div>
+                            
+                            <article>
+                                <img th:src="@{'http://localhost:8080/cashierimage/' + ${cashier.image_path}}" width="180px" height="220px" alt=""
+                                style="margin-left: 20px; display:flex; border-radius:2px; " ></article>
+                            <article class="detailInfo">
+                                <section class="name">Name
+                                    <article> : [[${cashier.firstname}]] [[${cashier.lastname}]]</article>
+                                </section>
+                                <section class="sex">Sex
+                                    <article> : [[${cashier.sex}]]</article>
+                                </section>
+                                <section class="age">Hired date
+                                    <article>: [[${cashier.createdDate}]]</article>
+                                </section>
+                                <section class="age">Age
+                                    <article>: 21</article>
+                                </section>
+                                <section class="login">Login
+                                    <article>: [[${cashier.username}]]</article>
+                                </section>
+                                <section class="pwd">Password
+                                    <article>:[[${cashier.password}]]</article>
+                                </section>
+                            </article>
+                        </section>
+                    </article>
+                </section>
+
+                <!-- <section class="showInfo" id ="showInformation1">
+                    <article>
+                        <section th:each="drink : ${drinks}" th:id="'tab-' + ${drink.id}" id="show2" style="display: none;">
+                            <h1>Drink</h1>
+
+                        </section>
+                    </article>
+                </section>
+                <section>
+
+                </section> -->
+            </section>
+
+        </section>
+
+    </main>
+    <script th:inline="javascript">
+        function listContent(ls, menuList) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tabcontent");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            tablinks = document.getElementsByClassName("tablinks");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(menuList).style.display = "block";
+            ls.currentTarget.className += " active";
+        }
+
+        function showMoreInfo(id) {
+                var tabContents = document.querySelectorAll('#showInformation .show1');
+                tabContents.forEach(function (content) {
+                    content.style.display = 'none';
+                });
+
+                var clickedTab = document.querySelector('#tab-' + id);
+                clickedTab.style.display = 'block';
+        }
+
+
+    </script>
+</body>
+
+</html>
